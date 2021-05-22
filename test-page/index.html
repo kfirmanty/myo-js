@@ -11,7 +11,12 @@
   <body>
     <a-scene id="scene" myo>
       <a-camera></a-camera>
-      <a-box position="0 0 -15" scale="2 2 2" color="red" myo="from: -5; to: 5; property: scale.x"></a-box>
+      <a-box position="0 0 -15" scale="2 2 2" color="red" myo="from: -5; to: 5; property: position.y; on: orientation.pitch"></a-box>
+      <a-box position="5 0 -15" scale="2 2 2" color="blue" myo="from: -5; to: 5; property: scale.x; on: orientation.roll"></a-box>
+      
+      <a-light type="spot" angle="15" color="#ffaaaa" position="10 20 -10" myo="from: -4; to: 4; property: rotation.x; on: orientation.pitch"></a-light>
+      <a-light type="spot" angle="15" color="#aaffaa" position="-10 20 -10" myo="from: -4; to: 4; property: rotation.x; on: orientation.roll"></a-light>
+      <a-plane rotation="-90 0 0" scale="100 100 100" color="blue" position="0 -1 0"></a-plane>
     </a-scene>
   </body>
 </html>

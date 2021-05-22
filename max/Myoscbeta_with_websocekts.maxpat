@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 87.0, 1852.0, 1079.0 ],
+		"rect" : [ 92.0, 96.0, 1852.0, 1079.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -177,8 +177,6 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
-						"node_bin_path" : "",
-						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -390,9 +388,9 @@
 									"outlettype" : [ "", "", "", "" ],
 									"patching_rect" : [ 191.789276000000001, 346.0, 59.5, 19.0 ],
 									"restore" : 									{
-										"maxin" : [ 616.375 ],
+										"maxin" : [ 277.5 ],
 										"maxout" : [ 1.0 ],
-										"minin" : [ -308.9375 ],
+										"minin" : [ -232.0625 ],
 										"minout" : [ 0.0 ]
 									}
 ,
@@ -1053,9 +1051,9 @@
 									"outlettype" : [ "", "", "", "" ],
 									"patching_rect" : [ 191.789276000000001, 346.0, 59.5, 19.0 ],
 									"restore" : 									{
-										"maxin" : [ 715.5 ],
+										"maxin" : [ 229.5625 ],
 										"maxout" : [ 1.0 ],
-										"minin" : [ -598.6875 ],
+										"minin" : [ -326.875 ],
 										"minout" : [ 0.0 ]
 									}
 ,
@@ -1716,9 +1714,9 @@
 									"outlettype" : [ "", "", "", "" ],
 									"patching_rect" : [ 191.789276000000001, 346.0, 59.5, 19.0 ],
 									"restore" : 									{
-										"maxin" : [ 427.1875 ],
+										"maxin" : [ 580.3125 ],
 										"maxout" : [ 1.0 ],
-										"minin" : [ -325.5625 ],
+										"minin" : [ -479.3125 ],
 										"minout" : [ 0.0 ]
 									}
 ,
@@ -2379,9 +2377,9 @@
 									"outlettype" : [ "", "", "", "" ],
 									"patching_rect" : [ 191.789276000000001, 346.0, 59.5, 19.0 ],
 									"restore" : 									{
-										"maxin" : [ 3.7119 ],
+										"maxin" : [ 1.7475 ],
 										"maxout" : [ 1.0 ],
-										"minin" : [ -2.205 ],
+										"minin" : [ -0.5122 ],
 										"minout" : [ 0.0 ]
 									}
 ,
@@ -3042,9 +3040,9 @@
 									"outlettype" : [ "", "", "", "" ],
 									"patching_rect" : [ 191.789276000000001, 346.0, 59.5, 19.0 ],
 									"restore" : 									{
-										"maxin" : [ 1.5239 ],
+										"maxin" : [ 0.7426 ],
 										"maxout" : [ 1.0 ],
-										"minin" : [ -2.3183 ],
+										"minin" : [ -1.3994 ],
 										"minout" : [ 0.0 ]
 									}
 ,
@@ -3705,9 +3703,9 @@
 									"outlettype" : [ "", "", "", "" ],
 									"patching_rect" : [ 191.789276000000001, 346.0, 59.5, 19.0 ],
 									"restore" : 									{
-										"maxin" : [ 3.0395 ],
+										"maxin" : [ 1.5961 ],
 										"maxout" : [ 1.0 ],
-										"minin" : [ -2.5156 ],
+										"minin" : [ -1.4516 ],
 										"minout" : [ 0.0 ]
 									}
 ,
@@ -4368,9 +4366,9 @@
 									"outlettype" : [ "", "", "", "" ],
 									"patching_rect" : [ 191.789276000000001, 346.0, 59.5, 19.0 ],
 									"restore" : 									{
-										"maxin" : [ 0.9996 ],
+										"maxin" : [ 0.7987 ],
 										"maxout" : [ 1.0 ],
-										"minin" : [ -0.9987 ],
+										"minin" : [ -0.8009 ],
 										"minout" : [ 0.0 ]
 									}
 ,
@@ -5031,9 +5029,9 @@
 									"outlettype" : [ "", "", "", "" ],
 									"patching_rect" : [ 191.789276000000001, 346.0, 59.5, 19.0 ],
 									"restore" : 									{
-										"maxin" : [ 0.4612 ],
+										"maxin" : [ 0.4555 ],
 										"maxout" : [ 1.0 ],
-										"minin" : [ -0.4657 ],
+										"minin" : [ -0.4743 ],
 										"minout" : [ 0.0 ]
 									}
 ,
@@ -5694,9 +5692,9 @@
 									"outlettype" : [ "", "", "", "" ],
 									"patching_rect" : [ 191.789276000000001, 346.0, 59.5, 19.0 ],
 									"restore" : 									{
-										"maxin" : [ 0.6586 ],
+										"maxin" : [ 0.1846 ],
 										"maxout" : [ 1.0 ],
-										"minin" : [ -0.4445 ],
+										"minin" : [ -0.7293 ],
 										"minout" : [ 0.0 ]
 									}
 ,
@@ -7024,8 +7022,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"fontsize" : [ 12.059008 ],
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
+					"fontsize" : [ 12.059008 ]
 				}
 ,
 				"parentstyle" : "",

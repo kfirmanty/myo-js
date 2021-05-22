@@ -1,6 +1,13 @@
 const WebSocket = require("ws");
+const HttpsServer = require("https").createServer;
+const fs = require("fs");
 
-const wsToWeb = new WebSocket.Server({ port: 8390 });
+const sslServer = HttpsServer({
+    cert: fs.readFileSync("/etc/ssl/certs/www_localhost_com.crt"),
+    key: fs.readFileSync("/etc/ssl/private/localhost.key")
+});
+
+const wsToWeb = new WebSocket.Server({ server: sslServer });
 let webClients = [];
 const removeClient = ws => {
     const index = webClients.indexOf(ws);
@@ -15,6 +22,8 @@ wsToWeb.on("connection", ws => {
         removeClient(ws);
     });
 });
+
+sslServer.listen(8390);
 
 const wsFromMyo = new WebSocket.Server({ port: 8391 });
 
@@ -69,3 +78,36 @@ server.on("listening", () => {
 });
 
 server.bind(8392);
+
+const remoteControlSslServer = HttpsServer({
+    cert: fs.readFileSync("/etc/ssl/certs/www_firmanty_com.crt"),
+    key: fs.readFileSync("/etc/ssl/private/firmanty.key")
+});
+
+//SERVER FOR REMOTE CONTROL MESSAGES
+const remoteControlWs = new WebSocket.Server({
+    server: remoteControlSslServer
+});
+let remoteControlWebClients = [];
+let scene = {};
+const sendToAll = msg => {
+    remoteControlWebClients.forEach(c => c.send(JSON.stringify(msg)));
+};
+const removeRemoteControlClient = ws => {
+    const index = remoteControlWebClients.indexOf(ws);
+    if (index > -1) {
+        remoteControlWebClients.splice(index, 1);
+    }
+};
+remoteControlWs.on("connection", ws => {
+    console.log("REMOTE CONTROL CLIENT CONNECTED");
+    remoteControlWebClients.push(ws);
+    ws.on("close", () => {
+        removeRemoteControlClient(ws);
+    });
+    ws.on("message", message => {
+        //console.log("received:", message);
+        const msg = JSON.parse(message);
+    });
+});
+remoteControlSslServer.listen(8490);
