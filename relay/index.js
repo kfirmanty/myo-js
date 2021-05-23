@@ -3,10 +3,14 @@ const max = require("./max.js");
 const web = require("./web.js");
 const fs = require("fs");
 
-const certs = {
-    cert: fs.readFileSync("/etc/ssl/certs/www_localhost_com.crt"),
-    key: fs.readFileSync("/etc/ssl/private/localhost.key")
-};
+const USE_SSL = false; //TODO: move to cmd line option
+
+const certs = USE_SSL
+    ? {
+          cert: fs.readFileSync("/etc/ssl/certs/www_localhost_com.crt"),
+          key: fs.readFileSync("/etc/ssl/private/localhost.key")
+      }
+    : {};
 
 let webClients = [];
 const removeClient = ws => {

@@ -52,12 +52,12 @@ const handlers = {
 };
 
 AFRAME.registerSystem("remote-controller", {
-    schema: { url: { type: "string", default: "wss://localhost:8490" } },
+    schema: { url: { type: "string", default: "ws://localhost:8490" } },
 
     init: function() {
         this.ws = new WebSocket(this.data.url);
         this.ws.onmessage = function(event) {
-            var msg = JSON.parse(event.data);
+            const msg = JSON.parse(event.data);
             handlers[msg.type](msg);
         };
     }

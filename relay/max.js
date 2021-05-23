@@ -3,6 +3,7 @@ const dgram = require("dgram");
 const server = dgram.createSocket("udp4");
 
 const startServer = ({ port, removeClient, webClients }) => {
+    console.log("starting max server on port:", port);
     server.on("error", err => {
         console.log(`server error:\n${err.stack}`);
         server.close();
@@ -38,3 +39,5 @@ const startServer = ({ port, removeClient, webClients }) => {
 
     server.bind(port);
 };
+
+exports.startServer = startServer;

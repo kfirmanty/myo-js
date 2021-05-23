@@ -6,10 +6,11 @@
     <meta name="description" content="Virgallery" />
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="/aframe/components.js"></script>
+    <script src="/aframe/remote.js"></script>
   </head>
 
   <body>
-    <a-scene id="scene" myo>
+    <a-scene id="scene" myo remote-controller>
       <a-camera></a-camera>
       <a-box position="0 0 -15" scale="2 2 2" color="red" myo="from: -5; to: 5; property: position.y; on: orientation.pitch"></a-box>
       <a-box position="5 0 -15" scale="2 2 2" color="blue" myo="from: -5; to: 5; property: scale.x; on: orientation.roll"></a-box>
