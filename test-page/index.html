@@ -5,19 +5,80 @@
     <title>VIR</title>
     <meta name="description" content="Virgallery" />
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="/aframe/components.js"></script>
-    <script src="/aframe/remote.js"></script>
+    <script src="../aframe/components.js"></script>
+    <script src="../aframe/remote.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
 
   <body>
+    <div
+      id="splash"
+      style="background-image: linear-gradient(to right, #02e5e9 , #e38aff); background-size: contain; background-position: center; background-repeat: no-repeat;"
+      >
+      <div class="loading"></div>
+      <div class="start-button" style="display: block; opacity: 0">
+        ENTER VR
+      </div>
+    </div>
     <a-scene id="scene" myo remote-controller>
+      <a-assets>
+        <audio id="low1" src="./audio/low1.wav" preload="auto"></audio>
+        <audio id="low2" src="./audio/low2.wav" preload="auto"></audio>
+        <audio id="low3" src="./audio/low3.wav" preload="auto"></audio>
+        <audio id="medium1" src="./audio/medium1.wav" preload="auto"></audio>
+        <audio id="high1" src="./audio/high1.wav" preload="auto"></audio>
+        <audio id="high2" src="./audio/high2.wav" preload="auto"></audio>
+        <audio id="high3" src="./audio/high3.wav" preload="auto"></audio>
+        <audio id="high4" src="./audio/high4.wav" preload="auto"></audio>
+      </a-assets>
       <a-camera></a-camera>
-      <a-box position="0 0 -15" scale="2 2 2" color="red" myo="from: -5; to: 5; property: position.y; on: orientation.pitch"></a-box>
-      <a-box position="5 0 -15" scale="2 2 2" color="blue" myo="from: -5; to: 5; property: scale.x; on: orientation.roll"></a-box>
+      <a-box id="redBox" position="0 0 -15" scale="2 2 2" color="red" myo="from: -5; to: 5; property: position.y; on: orientation.pitch"></a-box>
+      <a-box id="blueBox" position="5 0 -15" scale="2 2 2" color="blue" myo="from: -5; to: 5; property: scale.x; on: orientation.roll"></a-box>
       
       <a-light type="spot" angle="15" color="#ffaaaa" position="10 20 -10" myo="from: -4; to: 4; property: rotation.x; on: orientation.pitch"></a-light>
       <a-light type="spot" angle="15" color="#aaffaa" position="-10 20 -10" myo="from: -4; to: 4; property: rotation.x; on: orientation.roll"></a-light>
       <a-plane rotation="-90 0 0" scale="100 100 100" color="blue" position="0 -1 0"></a-plane>
+
+      <a-entity sound="src: #low1; autoplay: false; loop: true; position:0 0 0" myo="from: 0; to: 1; property: sound.volume; on: orientation.pitch"></a-entity>
+      <a-entity sound="src: #low2; autoplay: false; loop: true; position:0 0 0" myo="from: 0; to: 1; property: sound.volume; on: orientation.yaw"></a-entity>
+      <a-entity sound="src: #low3; autoplay: false; loop: true; position:0 0 0"myo="from: 0; to: 1; property: sound.volume; on: gyro.z"></a-entity>
+      <a-entity sound="src: #medium1; autoplay: false; loop: true; position:0 0 0" myo="from: 0; to: 1; property: sound.volume; on: gyro.x"></a-entity>
+      <a-entity sound="src: #high1; autoplay: false; loop: true; position:0 0 0" myo="from: 0; to: 1; property: sound.volume; on: acceleration.z"></a-entity>
+      <a-entity sound="src: #high2; autoplay: false; loop: true; position:0 0 0" myo="from: 0; to: 1; property: sound.volume; on: acceleration.x"></a-entity>
+      <a-entity sound="src: #high3; autoplay: false; loop: true; position:0 0 0" myo="from: 0; to: 1; property: sound.volume; on: orientation.roll"></a-entity>
+      <!-- <a-entity sound="src: #high4; autoplay: false; loop: true; position:0 0 0"></a-entity> -->
+
     </a-scene>
+
+    <script>
+      //myo steruje glosnoscia loopow
+      //myo przewija wideo
+      document.addEventListener("DOMContentLoaded", function() {
+          const scene = document.querySelector("a-scene");
+          const splash = document.querySelector("#splash");
+          const loading = document.querySelector("#splash .loading");
+          const startButton = document.querySelector("#splash .start-button");
+
+          scene.addEventListener("loaded", function(e) {
+              setTimeout(() => {
+                  loading.style.display = "none";
+                  splash.style.backgroundColor = "rgba(0, 0, 0, 0.85)";
+                  startButton.style.opacity = 1;
+              }, 50);
+          });
+
+          startButton.addEventListener("click", function(e) {
+              splash.style.display = "none";
+
+              setTimeout(() => {
+                  console.log("Starting all videos and sounds!");
+                  const sounds = Array.from(document.getElementsByTagName("a-entity"));
+                  sounds
+                      .filter(s => s.components.sound)
+                      .forEach(s => s.components.sound.playSound());
+              }, 50);
+          });
+      });
+    </script>
   </body>
 </html>

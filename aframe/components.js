@@ -96,6 +96,8 @@ AFRAME.registerComponent("myo", {
             this.el.object3D[this.propertyPath[0]][
                 this.propertyPath[1]
             ] = value;
+        } else if (pathFirst == "sound") {
+            this.el.setAttribute.apply(this.el, [...this.propertyPath, value]);
         } else {
             this.el.setAttribute.apply(this.el, [...this.propertyPath, value]);
         }
