@@ -15,7 +15,24 @@ const updateElement = (id, attribute, value) => {
             entity.setAttribute("id", id);
             document.getElementById("scene").appendChild(entity);
         }
-        document.getElementById(id).setAttribute(attribute, value);
+        if (attribute == "soundPlaying") {
+            console.log("remote sound:", id, value);
+            if (el.components && el.components.sound) {
+                value
+                    ? el.components.sound.playSound()
+                    : el.components.sound.stopSound();
+            } else {
+                console.log("COULDN'T FIND SOUND COMPONENT FOR:", id);
+            }
+        } else if (attribute == "videoPlaying") {
+            if (el.components && el.components.video) {
+                value ? el.components.video.play() : el.components.video.stop();
+            } else {
+                console.log("COULDN'T FIND VIDEO COMPONENT FOR:", id);
+            }
+        } else {
+            document.getElementById(id).setAttribute(attribute, value);
+        }
     } catch (e) {
         console.log("ERROR", e);
     }
@@ -44,6 +61,23 @@ const initScene = ({ scene }) => {
     );
 };
 
+const startAllSounds = () => {
+    const sounds = Array.from(document.getElementsByTagName("a-entity"));
+    sounds
+        .filter(s => s.components.sound)
+        .forEach(s => s.components.sound.playSound());
+};
+
+const startAllVideos = _ => {
+    const videos = document.getElementsByTagName("video");
+    for (let i = 0; i < videos.length; i++) {
+        const v = videos[i];
+        try {
+            if (v.play) v.play();
+        } catch (e) {}
+    }
+};
+
 const handlers = {
     showMessage,
     updateScene,
@@ -52,10 +86,14 @@ const handlers = {
 };
 
 AFRAME.registerSystem("remote-controller", {
-    schema: { url: { type: "string", default: "ws://localhost:8490" } },
+    schema: {},
 
-    init: function() {
-        this.ws = new WebSocket(this.data.url);
+    init: function() {},
+    sceneLoaded: function() {
+        console.log("Starting all videos and sounds!");
+        startAllSounds();
+        startAllVideos();
+        this.ws = new WebSocket("ws://localhost:8490");
         this.ws.onmessage = function(event) {
             const msg = JSON.parse(event.data);
             handlers[msg.type](msg);

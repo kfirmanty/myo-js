@@ -1,7 +1,7 @@
 const MYO_FROM = 0;
 const MYO_TO = 1;
 const MYO_SPAN = MYO_TO - MYO_FROM;
-
+const HOST = "localhost";
 const toRange = (v, from, to) => {
     const newSpan = to - from;
     const percentage = (v - MYO_FROM) / MYO_SPAN;
@@ -9,8 +9,9 @@ const toRange = (v, from, to) => {
 };
 
 //mock system version so no additional setup is needed
+
 AFRAME.registerSystem("myo", {
-    schema: { url: { type: "string", default: "ws://localhost:8390" } },
+    schema: { url: { type: "string", default: "ws://" + HOST + ":8390" } },
 
     init: function() {
         this.myoData = {};
@@ -50,9 +51,10 @@ AFRAME.registerSystem("myo", {
             : 1;
     }
 });
+
 /*
 AFRAME.registerSystem("myo", {
-    schema: { url: { type: "string", default: "wss://localhost:8390" } },
+    schema: { url: { type: "string", default: "ws://" + HOST + ":8390" } },
 
     init: function() {
         this.ws = new WebSocket(this.data.url);

@@ -5,11 +5,19 @@ const HttpServer = require("http").createServer;
 const SCENE_DEFAULTS = {
     intro: {
         redBox: { visible: true },
-        blueBox: { visible: false }
+        blueBox: { visible: false },
+        high1Sound: { soundPlaying: true },
+        low1Sound: { soundPlaying: true },
+        high2Sound: { soundPlaying: false },
+        low2Sound: { soundPlaying: false }
     },
     middle: {
         redBox: { visible: false },
-        blueBox: { visible: true }
+        blueBox: { visible: true },
+        high1Sound: { soundPlaying: false },
+        low1Sound: { soundPlaying: false },
+        high2Sound: { soundPlaying: true },
+        low2Sound: { soundPlaying: true }
     }
 };
 
@@ -45,7 +53,9 @@ const startServer = ({ port, certs }) => {
             }
         }
     };
-
+    remoteControlWs.on("open", _ =>
+        console.log("remote control server started")
+    );
     remoteControlWs.on("connection", ws => {
         console.log("REMOTE CONTROL CLIENT CONNECTED");
         remoteControlWebClients.push(ws);
@@ -61,6 +71,7 @@ const startServer = ({ port, certs }) => {
                 sendToAll(msg);
             }
         });
+        ws.send(JSON.stringify({ type: "initScene", scene }));
     });
     remoteControlSslServer.listen(port);
 };

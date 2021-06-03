@@ -6,6 +6,7 @@ const startServer = ({ port, removeClient, webClients, certs }) => {
     console.log("starting web facing websocket on port:", port);
     const sslServer = certs.cert ? HttpsServer(certs) : HttpServer();
     const wsToWeb = new WebSocket.Server({ server: sslServer });
+    wsToWeb.on("open", _ => console.log("web facing websocket server started"));
     wsToWeb.on("connection", ws => {
         console.log("CLIENT CONNECTED");
         webClients.push(ws);
