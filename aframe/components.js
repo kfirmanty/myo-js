@@ -100,6 +100,10 @@ AFRAME.registerComponent("myo", {
             ] = value;
         } else if (pathFirst == "sound") {
             this.el.setAttribute.apply(this.el, [...this.propertyPath, value]);
+        } else if (pathFirst == "video") {
+            const videoId = this.el.id.replace("-disp", "");
+            document.getElementById(videoId)[this.propertyPath[1]] = value;
+            //this.el.setAttribute.apply(this.el, [...this.propertyPath, value]);
         } else {
             this.el.setAttribute.apply(this.el, [...this.propertyPath, value]);
         }
