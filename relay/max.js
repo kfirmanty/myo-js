@@ -12,12 +12,12 @@ const startServer = ({ port, removeClient, webClients }) => {
     server.on("message", (msg, rinfo) => {
         console.log(
             "INFO",
-            `server got: ${JSON.parse(msg).data} from ${rinfo.address}:${
-                rinfo.port
+            `server got: ${JSON.parse(msg).data} from ${rinfo.address}:${rinfo.port
             }`
         );
-        const [aX, aY, aZ, gX, gY, gZ, oR, oP, oY] = JSON.parse(msg).data;
+        const [aX, aY, aZ, gX, gY, gZ, oR, oP, oY, myoName] = JSON.parse(msg).data;
         const message = {
+            name: myoName,
             orientation: { roll: oR, pitch: oP, yaw: oY },
             acceleration: { x: aX, y: aY, z: aZ },
             gyro: { x: gX, y: gY, z: gZ }

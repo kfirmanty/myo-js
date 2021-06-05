@@ -13,17 +13,17 @@ const toRange = (v, from, to) => {
 AFRAME.registerSystem("myo", {
     schema: { url: { type: "string", default: "ws://" + HOST + ":8390" } },
 
-    init: function() {
+    init: function () {
         this.myoData = {};
         this.phase = 0.0;
     },
-    tick: function() {
+    tick: function () {
         const n = (...vals) => {
             const val = vals.reduce((acc, el) => el + acc) / vals.length;
             return (val + 1) / 2;
         };
         const phase = this.phase;
-        this.myoData = {
+        this.myoData["any"] = {
             orientation: {
                 pitch: n(Math.sin(phase)),
                 roll: n(Math.cos(phase)),
@@ -42,12 +42,13 @@ AFRAME.registerSystem("myo", {
         };
         this.phase += 0.01;
     },
-    getValue: function(name) {
+    getValue: function (name) {
         const [type, property] = name.split(".");
         return this.myoData &&
-            this.myoData[type] &&
-            this.myoData[type][property]
-            ? this.myoData[type][property]
+            this.myoData[myoName] &&
+            this.myoData[myoName][type] &&
+            this.myoData[myoName][type][property]
+            ? this.myoData[myoName][type][property]
             : 1;
     }
 });
@@ -56,19 +57,22 @@ AFRAME.registerSystem("myo", {
 AFRAME.registerSystem("myo", {
     schema: { url: { type: "string", default: "ws://" + HOST + ":8390" } },
 
-    init: function() {
+    init: function () {
         this.ws = new WebSocket(this.data.url);
+        this.myoData = {};
         this.ws.onmessage = event => {
             const msg = JSON.parse(event.data);
-            this.myoData = msg;
+            this.myoData[msg.name] = msg;
+            this.myoData["any"] = msg;
         };
     },
-    getValue: function(name) {
+    getValue: function (myoName, name) {
         const [type, property] = name.split(".");
         return this.myoData &&
-            this.myoData[type] &&
-            this.myoData[type][property]
-            ? this.myoData[type][property]
+            this.myoData[myoName] &&
+            this.myoData[myoName][type] &&
+            this.myoData[myoName][type][property]
+            ? this.myoData[myoName][type][property]
             : 1;
     }
 });
@@ -78,15 +82,16 @@ AFRAME.registerComponent("myo", {
         from: { type: "number", default: MYO_FROM },
         to: { type: "number", default: MYO_TO },
         on: { type: "string", default: "orientation.pitch" },
-        property: { type: "string", default: "position.x" }
+        property: { type: "string", default: "position.x" },
+        name: { type: "string", default: "any" }
     },
-    init: function() {
+    init: function () {
         this.propertyPath = this.data.property.split(".");
     },
-    tick: function() {
+    tick: function () {
         const pathFirst = this.propertyPath[0];
         const value = toRange(
-            this.system.getValue(this.data.on),
+            this.system.getValue(this.data.name, this.data.on),
             this.data.from,
             this.data.to
         );
