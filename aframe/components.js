@@ -5,7 +5,7 @@ const HOST = "localhost";
 const toRange = (v, from, to) => {
     const newSpan = to - from;
     const percentage = (v - MYO_FROM) / MYO_SPAN;
-    return from + newSpan * percentage;
+    return Math.max(Math.min(from + newSpan * percentage, to), from); //make value not go over boundaries in any case
 };
 
 //mock system version so no additional setup is needed
