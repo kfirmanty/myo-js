@@ -2,23 +2,13 @@ const WebSocket = require("ws");
 const HttpsServer = require("https").createServer;
 const HttpServer = require("http").createServer;
 
-const SCENE_DEFAULTS = {
-    intro: {
-        redBox: { visible: true },
-        blueBox: { visible: false },
-        high1Sound: { soundPlaying: true },
-        low1Sound: { soundPlaying: true },
-        high2Sound: { soundPlaying: false },
-        low2Sound: { soundPlaying: false }
-    },
-    middle: {
-        redBox: { visible: false },
-        blueBox: { visible: true },
-        high1Sound: { soundPlaying: false },
-        low1Sound: { soundPlaying: false },
-        high2Sound: { soundPlaying: true },
-        low2Sound: { soundPlaying: true }
-    }
+const DEAFULT_SCENE = {
+    redBox: { visible: true },
+    blueBox: { visible: false },
+    high1Sound: { soundPlaying: true },
+    low1Sound: { soundPlaying: true },
+    high2Sound: { soundPlaying: false },
+    low2Sound: { soundPlaying: false }
 };
 
 const startServer = ({ port, certs }) => {
@@ -30,7 +20,7 @@ const startServer = ({ port, certs }) => {
         server: remoteControlSslServer
     });
     let remoteControlWebClients = [];
-    let scene = {};
+    let currentScene = DEAFULT_SCENE;
 
     const sendToAll = msg => {
         remoteControlWebClients.forEach(c => c.send(JSON.stringify(msg)));
@@ -43,14 +33,10 @@ const startServer = ({ port, certs }) => {
     };
 
     const internalHandlers = {
-        switchScene: ({ name }) => {
-            if (SCENE_DEFAULTS[name]) {
-                scene = SCENE_DEFAULTS[name];
-                console.log("INIT SCENE:", scene);
-                sendToAll({ type: "initScene", scene });
-            } else {
-                console.log("UNKNOWN SCENE NAME:", name);
-            }
+        switchScene: ({ scene }) => {
+            currentScene = scene;
+            console.log("INIT SCENE:", currentScene);
+            sendToAll({ type: "initScene", currentScene });
         }
     };
     remoteControlWs.on("open", _ =>
@@ -71,7 +57,7 @@ const startServer = ({ port, certs }) => {
                 sendToAll(msg);
             }
         });
-        ws.send(JSON.stringify({ type: "initScene", scene }));
+        ws.send(JSON.stringify({ type: "initScene", currentScene }));
     });
     remoteControlSslServer.listen(port);
 };
