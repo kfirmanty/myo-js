@@ -6,55 +6,33 @@ const toRange = (v, from, to) => {
     const percentage = (v - MYO_FROM) / MYO_SPAN;
     return Math.max(Math.min(from + newSpan * percentage, to), from); //make value not go over boundaries in any case
 };
-
-//mock system version so no additional setup is needed
-/*
-AFRAME.registerSystem("myo", {
-    schema: { url: { type: "string", default: WSS_WEB } },
-
-    init: function () {
-        this.myoData = {};
-        this.phase = 0.0;
+const normalize = (...vals) => {
+    const val = vals.reduce((acc, el) => el + acc) / vals.length;
+    return (val + 1) / 2;
+};
+const mockData = phase => ({
+    orientation: {
+        pitch: normalize(Math.sin(phase)),
+        roll: normalize(Math.cos(phase)),
+        yaw: normalize(Math.sin(phase * 5), Math.cos(phase / 3))
     },
-    tick: function () {
-        const n = (...vals) => {
-            const val = vals.reduce((acc, el) => el + acc) / vals.length;
-            return (val + 1) / 2;
-        };
-        const phase = this.phase;
-        this.myoData["any"] = {
-            orientation: {
-                pitch: n(Math.sin(phase)),
-                roll: n(Math.cos(phase)),
-                yaw: n(Math.sin(phase * 5), Math.cos(phase / 3))
-            },
-            gyro: {
-                x: n(Math.cos(phase / 4)),
-                y: n(Math.sin(phase * 5)),
-                z: n(Math.sin(phase * 3.5), Math.cos(phase / 2.4))
-            },
-            acceleration: {
-                x: n(Math.cos(phase) + Math.sin(phase)),
-                y: n(Math.cos(phase * 2.1)),
-                z: n(Math.cos(phase / 3))
-            }
-        };
-        this.phase += 0.01;
+    gyro: {
+        x: normalize(Math.cos(phase / 4)),
+        y: normalize(Math.sin(phase * 5)),
+        z: normalize(Math.sin(phase * 3.5), Math.cos(phase / 2.4))
     },
-    getValue: function (name) {
-        const [type, property] = name.split(".");
-        return this.myoData &&
-            this.myoData[myoName] &&
-            this.myoData[myoName][type] &&
-            this.myoData[myoName][type][property]
-            ? this.myoData[myoName][type][property]
-            : 1;
+    acceleration: {
+        x: normalize(Math.cos(phase) + Math.sin(phase)),
+        y: normalize(Math.cos(phase * 2.1)),
+        z: normalize(Math.cos(phase / 3))
     }
 });
-*/
 
 AFRAME.registerSystem("myo", {
-    schema: { url: { type: "string", default: WSS_WEB } },
+    schema: {
+        url: { type: "string", default: WSS_WEB },
+        mock: { type: "boolean", default: false }
+    },
 
     init: function() {
         this.ws = new WebSocket(this.data.url);
@@ -64,6 +42,13 @@ AFRAME.registerSystem("myo", {
             this.myoData[msg.name] = msg;
             this.myoData["any"] = msg;
         };
+        this.phase = 0.0;
+    },
+    tick: function() {
+        if (this.data.mock) {
+            this.myoData["any"] = mockData(this.phase);
+            this.phase += 0.01;
+        }
     },
     getValue: function(myoName, name) {
         const [type, property] = name.split(".");
@@ -77,6 +62,7 @@ AFRAME.registerSystem("myo", {
 });
 
 AFRAME.registerComponent("myo", {
+    multiple: true,
     schema: {
         from: { type: "number", default: MYO_FROM },
         to: { type: "number", default: MYO_TO },
