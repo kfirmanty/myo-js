@@ -93,7 +93,7 @@ AFRAME.registerSystem("remote-controller", {
         console.log("Starting all videos and sounds!");
         startAllSounds();
         startAllVideos();
-        this.ws = new WebSocket("ws://localhost:8490");
+        this.ws = new WebSocket(WSS_REMOTE);
         this.ws.onmessage = function(event) {
             const msg = JSON.parse(event.data);
             handlers[msg.type](msg);

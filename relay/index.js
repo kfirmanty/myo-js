@@ -2,13 +2,12 @@ const remote = require("./remote.js");
 const max = require("./max.js");
 const web = require("./web.js");
 const fs = require("fs");
+const constants = require("../constants.js");
 
-const USE_SSL = false; //TODO: move to cmd line option
-
-const certs = USE_SSL
+const certs = constants.USE_SSL
     ? {
-          cert: fs.readFileSync("/etc/ssl/certs/www_localhost_com.crt"),
-          key: fs.readFileSync("/etc/ssl/private/localhost.key")
+          cert: fs.readFileSync("/etc/ssl/certs/www_firmanty_com.crt"),
+          key: fs.readFileSync("/etc/ssl/private/firmanty.key")
       }
     : {};
 
@@ -20,6 +19,11 @@ const removeClient = ws => {
     }
 };
 
-web.startServer({ port: 8390, webClients, removeClient, certs });
-max.startServer({ port: 8392, webClients, removeClient });
-remote.startServer({ port: 8490, certs });
+web.startServer({
+    port: constants.WSS_WEB_PORT,
+    webClients,
+    removeClient,
+    certs
+});
+max.startServer({ port: constants.UDP_MAX_PORT, webClients, removeClient });
+remote.startServer({ port: constants.WSS_REMOTE_PORT, certs });

@@ -36,7 +36,7 @@ const startServer = ({ port, certs }) => {
         switchScene: ({ scene }) => {
             currentScene = scene;
             console.log("INIT SCENE:", currentScene);
-            sendToAll({ type: "initScene", currentScene });
+            sendToAll({ type: "initScene", scene: currentScene });
         }
     };
     remoteControlWs.on("open", _ =>
@@ -57,7 +57,7 @@ const startServer = ({ port, certs }) => {
                 sendToAll(msg);
             }
         });
-        ws.send(JSON.stringify({ type: "initScene", currentScene }));
+        ws.send(JSON.stringify({ type: "initScene", scene: currentScene }));
     });
     remoteControlSslServer.listen(port);
 };

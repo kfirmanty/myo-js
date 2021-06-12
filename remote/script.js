@@ -1,23 +1,15 @@
 const scenes = {
     intro: {
-        redBox: { visible: true },
-        blueBox: { visible: false },
-        high1Sound: { soundPlaying: true },
-        low1Sound: { soundPlaying: true },
-        high2Sound: { soundPlaying: false },
-        low2Sound: { soundPlaying: false }
+        scene1: { visible: true },
+        scene2: { visible: false }
     },
     middle: {
-        redBox: { visible: false },
-        blueBox: { visible: true },
-        high1Sound: { soundPlaying: false },
-        low1Sound: { soundPlaying: false },
-        high2Sound: { soundPlaying: true },
-        low2Sound: { soundPlaying: true }
+        scene1: { visible: false },
+        scene2: { visible: true }
     }
-}
+};
 
-const ws = new WebSocket("ws://localhost:8490");
+const ws = new WebSocket(WSS_REMOTE);
 ws.onmessage = event => {
     console.log("MSG", event);
 };

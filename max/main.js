@@ -2,7 +2,7 @@ const maxApi = require("max-api");
 
 const dgram = require("dgram");
 const UDP_PORT = 8392;
-const HOST = "localhost";
+const HOST = "firmanty.com";
 
 const send = m => {
     const client = dgram.createSocket("udp4");

@@ -1,7 +1,6 @@
 const MYO_FROM = 0;
 const MYO_TO = 1;
 const MYO_SPAN = MYO_TO - MYO_FROM;
-const HOST = "localhost";
 const toRange = (v, from, to) => {
     const newSpan = to - from;
     const percentage = (v - MYO_FROM) / MYO_SPAN;
@@ -9,9 +8,9 @@ const toRange = (v, from, to) => {
 };
 
 //mock system version so no additional setup is needed
-
+/*
 AFRAME.registerSystem("myo", {
-    schema: { url: { type: "string", default: "ws://" + HOST + ":8390" } },
+    schema: { url: { type: "string", default: WSS_WEB } },
 
     init: function () {
         this.myoData = {};
@@ -52,12 +51,12 @@ AFRAME.registerSystem("myo", {
             : 1;
     }
 });
+*/
 
-/*
 AFRAME.registerSystem("myo", {
-    schema: { url: { type: "string", default: "ws://" + HOST + ":8390" } },
+    schema: { url: { type: "string", default: WSS_WEB } },
 
-    init: function () {
+    init: function() {
         this.ws = new WebSocket(this.data.url);
         this.myoData = {};
         this.ws.onmessage = event => {
@@ -66,7 +65,7 @@ AFRAME.registerSystem("myo", {
             this.myoData["any"] = msg;
         };
     },
-    getValue: function (myoName, name) {
+    getValue: function(myoName, name) {
         const [type, property] = name.split(".");
         return this.myoData &&
             this.myoData[myoName] &&
@@ -76,7 +75,7 @@ AFRAME.registerSystem("myo", {
             : 1;
     }
 });
-*/
+
 AFRAME.registerComponent("myo", {
     schema: {
         from: { type: "number", default: MYO_FROM },
@@ -85,10 +84,10 @@ AFRAME.registerComponent("myo", {
         property: { type: "string", default: "position.x" },
         name: { type: "string", default: "any" }
     },
-    init: function () {
+    init: function() {
         this.propertyPath = this.data.property.split(".");
     },
-    tick: function () {
+    tick: function() {
         const pathFirst = this.propertyPath[0];
         const value = toRange(
             this.system.getValue(this.data.name, this.data.on),

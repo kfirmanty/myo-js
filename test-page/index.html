@@ -5,6 +5,7 @@
     <title>VIR</title>
     <meta name="description" content="Virgallery" />
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="../constants.js"></script>
     <script src="../aframe/components.js"></script>
     <script src="../aframe/remote.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css" />
@@ -30,7 +31,7 @@
         <audio id="high2" src="./audio/high2.wav" preload="auto"></audio>
         <audio id="high3" src="./audio/high3.wav" preload="auto"></audio>
         <audio id="high4" src="./audio/high4.wav" preload="auto"></audio>
-        <video id="test-video" src="./video/video.mp4" loop="true" preload="auto" autoplay="false">
+        <video id="test-video" src="./video/video.mp4" loop="true" preload="auto" autoplay="false"> </video>
       </a-assets>
       <a-camera></a-camera>
       <a-box id="redBox" position="0 0 -15" scale="2 2 2" color="red" myo="from: -5; to: 5; property: position.y; on: orientation.pitch"></a-box>
@@ -41,16 +42,12 @@
       <a-plane rotation="-90 0 0" scale="100 100 100" color="blue" position="0 -1 0"></a-plane>
       <a-light color="red" position="-1 1 0"></a-light>
 
-      <a-entity id="low1Sound" sound="src: #low1; autoplay: false; loop: true;" position:0 0 0 myo="from: 0; to: 1; property: sound.volume; on: orientation.pitch"></a-entity>
-      <a-entity id="high1Sound" sound="src: #high1; autoplay: false; loop: true;" position:0 0 0 myo="from: 0; to: 1; property: sound.volume; on: acceleration.z"></a-entity>
-      <a-entity id="low2Sound" sound="src: #low2; autoplay: false; loop: true;" position:0 0 0 myo="from: 0; to: 1; property: sound.volume; on: orientation.yaw"></a-entity>
-      <a-entity id="high2Sound" sound="src: #high2; autoplay: false; loop: true;" position:0 0 0 myo="from: 0; to: 1; property: sound.volume; on: orientation.pitch"></a-entity>
-      <!-- <a-entity sound="src: #low3; autoplay: false; loop: true; position:0 0 0"myo="from: 0; to: 1; property: sound.volume; on: gyro.z"></a-entity>
-           <a-entity sound="src: #medium1; autoplay: false; loop: true; position:0 0 0" myo="from: 0; to: 1; property: sound.volume; on: gyro.x"></a-entity>
-           <a-entity sound="src: #high3; autoplay: false; loop: true; position:0 0 0" myo="from: 0; to: 1; property: sound.volume; on: orientation.roll"></a-entity> -->
-           <!-- <a-entity sound="src: #high4; autoplay: false; loop: true; position:0 0 0"></a-entity> -->
+      <a-entity id="low1Sound" sound="src: #low1; autoplay: false; loop: true;" position="0 0 0" myo="from: 0; to: 1; property: sound.volume; on: orientation.pitch"></a-entity>
+      <a-entity id="high1Sound" sound="src: #high1; autoplay: false; loop: true;" position="0 0 0" myo="from: 0; to: 1; property: sound.volume; on: acceleration.z"></a-entity>
+      <a-entity id="low2Sound" sound="src: #low2; autoplay: false; loop: true;" position="0 0 0" myo="from: 0; to: 1; property: sound.volume; on: orientation.yaw"></a-entity>
+      <a-entity id="high2Sound" sound="src: #high2; autoplay: false; loop: true;" position="0 0 0" myo="from: 0; to: 1; property: sound.volume; on: orientation.pitch"></a-entity>
 
-           <a-video id="test-video-disp" src="#test-video" width="16" height="9" position="0 8 -20" myo="from: 0.1; to: 2; property: video.playbackRate; on: acceleration.x"></a-video>
+      <a-video id="test-video-disp" src="#test-video" width="16" height="9" position="0 8 -20" myo="from: 0.1; to: 2; property: video.playbackRate; on: acceleration.x"></a-video>
     </a-scene>
 
     <script>
@@ -81,3 +78,4 @@
     </script>
   </body>
 </html>
+
