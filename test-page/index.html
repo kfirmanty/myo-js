@@ -21,33 +21,12 @@
         ENTER VR
       </div>
     </div>
-    <a-scene id="scene" myo remote-controller>
+    <a-scene id="scene" myo>
       <a-assets>
-        <audio id="low1" src="./audio/low1.wav" preload="auto"></audio>
-        <audio id="low2" src="./audio/low2.wav" preload="auto"></audio>
-        <audio id="low3" src="./audio/low3.wav" preload="auto"></audio>
-        <audio id="medium1" src="./audio/medium1.wav" preload="auto"></audio>
-        <audio id="high1" src="./audio/high1.wav" preload="auto"></audio>
-        <audio id="high2" src="./audio/high2.wav" preload="auto"></audio>
-        <audio id="high3" src="./audio/high3.wav" preload="auto"></audio>
-        <audio id="high4" src="./audio/high4.wav" preload="auto"></audio>
-        <video id="test-video" src="./video/video.mp4" loop="true" preload="auto" autoplay="false"> </video>
       </a-assets>
       <a-camera></a-camera>
-      <a-box id="redBox" position="0 0 -15" scale="2 2 2" color="red" myo="from: -5; to: 5; property: position.y; on: orientation.pitch"></a-box>
-      <a-box id="blueBox" position="5 0 -15" scale="2 2 2" color="blue" myo="from: -5; to: 5; property: scale.x; on: gyro.y"></a-box>
-      
-      <a-light type="spot" angle="15" color="#ffaaaa" position="10 20 -10" myo="from: -4; to: 4; property: rotation.x; on: orientation.pitch"></a-light>
-      <a-light type="spot" angle="15" color="#aaffaa" position="-10 20 -10" myo="from: -4; to: 4; property: rotation.x; on: orientation.roll"></a-light>
-      <a-plane rotation="-90 0 0" scale="100 100 100" color="blue" position="0 -1 0"></a-plane>
-      <a-light color="red" position="-1 1 0"></a-light>
-
-      <a-entity id="low1Sound" sound="src: #low1; autoplay: false; loop: true;" position="0 0 0" myo="from: 0; to: 1; property: sound.volume; on: orientation.pitch"></a-entity>
-      <a-entity id="high1Sound" sound="src: #high1; autoplay: false; loop: true;" position="0 0 0" myo="from: 0; to: 1; property: sound.volume; on: acceleration.z"></a-entity>
-      <a-entity id="low2Sound" sound="src: #low2; autoplay: false; loop: true;" position="0 0 0" myo="from: 0; to: 1; property: sound.volume; on: orientation.yaw"></a-entity>
-      <a-entity id="high2Sound" sound="src: #high2; autoplay: false; loop: true;" position="0 0 0" myo="from: 0; to: 1; property: sound.volume; on: orientation.pitch"></a-entity>
-
-      <a-video id="test-video-disp" src="#test-video" width="16" height="9" position="0 8 -20" myo="from: 0.1; to: 2; property: video.playbackRate; on: acceleration.x"></a-video>
+      <a-box id="redBox" position="0 0 -15" scale="2 2 2" color="red" myo="from: -5; to: 5; property: position.y; on: orientation.roll"></a-box>
+      <a-box id="blueBox" position="5 0 -15" scale="2 2 2" color="blue" myo="from: -5; to: 5; property: position.y; on: orientation.roll; name: 1"></a-box>
     </a-scene>
 
     <script>
@@ -68,7 +47,7 @@
           startButton.addEventListener("click", function(e) {
               splash.style.display = "none";
               if(AFRAME.systems["remote-controller"]){
-                  AFRAME.systems["remote-controller"].prototype.sceneLoaded();
+                  //AFRAME.systems["remote-controller"].prototype.sceneLoaded();
               }else{
                   console.log("no remote controller system present");
               }             

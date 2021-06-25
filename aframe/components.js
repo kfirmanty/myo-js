@@ -40,13 +40,13 @@ AFRAME.registerSystem("myo", {
         this.ws.onmessage = event => {
             const msg = JSON.parse(event.data);
             this.myoData[msg.name] = msg;
-            this.myoData["any"] = msg;
+            //this.myoData["0"] = msg;
         };
         this.phase = 0.0;
     },
     tick: function() {
         if (this.data.mock) {
-            this.myoData["any"] = mockData(this.phase);
+            this.myoData["0"] = mockData(this.phase);
             this.phase += 0.01;
         }
     },
@@ -68,7 +68,7 @@ AFRAME.registerComponent("myo", {
         to: { type: "number", default: MYO_TO },
         on: { type: "string", default: "orientation.pitch" },
         property: { type: "string", default: "position.x" },
-        name: { type: "string", default: "any" }
+        name: { type: "string", default: "0" }
     },
     init: function() {
         this.propertyPath = this.data.property.split(".");
